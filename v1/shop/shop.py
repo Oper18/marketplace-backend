@@ -1,6 +1,9 @@
 # coding: utf-8
 
 import os
+import re
+
+from functools import wraps
 
 from typing import Optional, Union
 
@@ -24,6 +27,17 @@ router = APIRouter(
     prefix="/v1/shop",
     tags=["shop"]
 )
+
+
+def replace_lang(func):
+    @wraps(func)
+    async def wrapper(**kwargs):
+        if kwargs.get("lang"):
+            kwargs["lang"] = ("_" + re.sub("_", "", kwargs.get("lang"))).lower()
+        else:
+            kwargs["lang"] = "_ru"
+        return await func(**kwargs)
+    return wrapper
 
 
 async def get_records(
@@ -58,12 +72,14 @@ async def get_records(
     },
     summary="Product list",
 )
+@replace_lang
 async def get_products(
     request: Request,
     response: Response,
     product_id: Optional[int] = Query(None, description="product pk"),
     limit: Optional[int] = Query(10, description="amount of returned products"),
     offset: Optional[int] = Query(0, description="amount of scrolled products"),
+    lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
 ) -> ProductListResponse:
     products_count, products = await get_records(
         model=Product,
@@ -78,7 +94,7 @@ async def get_products(
         "products": [],
     }
     for p in products:
-        pd = await p.as_dict()
+        pd = await p.as_dict(lang=lang)
         pd["img"] = os.path.join(IMG_PATH, pd["img"]) if pd.get("img") else None
         res["products"].append(pd)
 
@@ -99,12 +115,14 @@ async def get_products(
     },
     summary="News list",
 )
+@replace_lang
 async def get_news(
     request: Request,
     response: Response,
     new_id: Optional[int] = Query(None, description="new pk"),
     limit: Optional[int] = Query(10, description="amount of returned news"),
     offset: Optional[int] = Query(0, description="amount of scrolled news"),
+    lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
 ) -> NewsListResponse:
     news_count, news = await get_records(
         model=New,
@@ -118,11 +136,11 @@ async def get_news(
         "news": [],
     }
     for n in news:
-        nd = await n.as_dict()
+        nd = await n.as_dict(lang=lang)
         nd["banner"] = os.path.join(IMG_PATH, nd["banner"]) \
             if nd.get("banner") else None
         if n.product:
-            nd["product"] = await n.product.as_dict()
+            nd["product"] = await n.product.as_dict(lang=lang)
             nd["product"]["img"] = os.path.join(IMG_PATH, nd["product"]["img"]) \
                 if nd["product"].get("img") else None
         res["news"].append(nd)
@@ -144,17 +162,19 @@ async def get_news(
     },
     summary="article number checker",
 )
+@replace_lang
 async def check_article_number(
     request: Request,
     response: Response,
     num: SerialNumberRequest,
+    lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
 ) -> Union[ProductResponse, Error40xResponse]:
     ser_num = await ProductSerialNumber.\
         filter(serial_number=num.serial_number).\
         first()
     if ser_num:
         res = await ser_num.product
-        res = await res.as_dict()
+        res = await res.as_dict(lang=lang)
         res["img"] = os.path.join(IMG_PATH, res["img"]) if res.get("img") else None
         return ProductResponse.parse_obj(res)
     return Error40xResponse.parse_obj(

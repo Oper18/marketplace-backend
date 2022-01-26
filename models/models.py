@@ -17,11 +17,25 @@ class Admin(AbstractAdmin):
 
 
 class Product(Model, ExtendedModel):
+    _translated_fields = ("name", "full_name", "description", "sketcehs")
+
     id = fields.IntField(pk=True)
     name = fields.CharField(max_length=256)
+    name_en = fields.CharField(max_length=256, null=True)
+    name_de = fields.CharField(max_length=256, null=True)
+    name_fr = fields.CharField(max_length=256, null=True)
     full_name = fields.CharField(max_length=512)
+    full_name_en = fields.CharField(max_length=512, null=True)
+    full_name_de = fields.CharField(max_length=512, null=True)
+    full_name_fr = fields.CharField(max_length=512, null=True)
     description = fields.TextField()
+    description_en = fields.TextField(null=True)
+    description_de = fields.TextField(null=True)
+    description_fr = fields.TextField(null=True)
     sketches = fields.CharField(max_length=2048)
+    sketches_en = fields.CharField(max_length=2048, null=True)
+    sketches_de = fields.CharField(max_length=2048, null=True)
+    sketches_fr = fields.CharField(max_length=2048, null=True)
     img = fields.CharField(max_length=64)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
@@ -47,10 +61,17 @@ class ProductSerialNumber(Model, ExtendedModel):
 
 class New(Model, ExtendedModel):
     _exclude = ("product",)
+    _translated_fields = ("head", "text")
 
     id = fields.IntField(pk=True)
     head = fields.CharField(max_length=256)
+    head_en = fields.CharField(max_length=256, null=True)
+    head_de = fields.CharField(max_length=256, null=True)
+    head_fr = fields.CharField(max_length=256, null=True)
     text = fields.TextField()
+    text_en = fields.TextField(null=True)
+    text_de = fields.TextField(null=True)
+    text_fr = fields.TextField(null=True)
     product = fields.ForeignKeyField(
         "models.Product", related_name='news', null=True
     )

@@ -62,7 +62,37 @@ class ProductResource(Model):
             input_=inputs.Text(),
         ),
         Field(
+            name="name_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_fr",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
             name="full_name",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="full_name_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="full_name_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="full_name_fr",
             label="",
             input_=inputs.Text(),
         ),
@@ -72,7 +102,37 @@ class ProductResource(Model):
             input_=inputs.Text(),
         ),
         Field(
+            name="description_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="description_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="description_fr",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
             name="sketches",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="sketches_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="sketches_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="sketches_fr",
             label="",
             input_=inputs.Text(),
         ),
@@ -139,7 +199,37 @@ class NewResource(Model):
             input_=inputs.Text(),
         ),
         Field(
+            name="head_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="head_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="head_fr",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
             name="text",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="text_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="text_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="text_fr",
             label="",
             input_=inputs.Text(),
         ),
