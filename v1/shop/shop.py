@@ -95,7 +95,7 @@ async def get_products(
     }
     for p in products:
         pd = await p.as_dict(lang=lang)
-        pd["img"] = os.path.join(IMG_PATH, pd["img"]) if pd.get("img") else None
+        pd["img"] = os.path.join(IMG_PATH, os.path.basename(pd["img"])) if pd.get("img") else None
         res["products"].append(pd)
 
     return ProductListResponse.parse_obj(res)
@@ -137,11 +137,11 @@ async def get_news(
     }
     for n in news:
         nd = await n.as_dict(lang=lang)
-        nd["banner"] = os.path.join(IMG_PATH, nd["banner"]) \
+        nd["banner"] = os.path.join(IMG_PATH, os.path.basename(nd["banner"])) \
             if nd.get("banner") else None
         if n.product:
             nd["product"] = await n.product.as_dict(lang=lang)
-            nd["product"]["img"] = os.path.join(IMG_PATH, nd["product"]["img"]) \
+            nd["product"]["img"] = os.path.join(IMG_PATH, os.path.basename(nd["product"]["img"])) \
                 if nd["product"].get("img") else None
         res["news"].append(nd)
 
@@ -175,7 +175,7 @@ async def check_article_number(
     if ser_num:
         res = await ser_num.product
         res = await res.as_dict(lang=lang)
-        res["img"] = os.path.join(IMG_PATH, res["img"]) if res.get("img") else None
+        res["img"] = os.path.join(IMG_PATH, os.path.basename(res["img"])) if res.get("img") else None
         return ProductResponse.parse_obj(res)
     return Error40xResponse.parse_obj(
         {"reason": "wrong serial number"}
