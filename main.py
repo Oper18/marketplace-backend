@@ -32,7 +32,7 @@ from settings import DATABASE, BASEDIR, REDIS
 from v1.shop import shop
 
 from models.resources import ProductResource, ProductSerialNumberResource, \
-    NewResource
+    NewResource, CategoryResource
 from models.extensions import AnonymousUser
 from models.models import Admin
 
@@ -163,6 +163,7 @@ def create_app():
             providers=[login_provider],
             redis=redis,
         )
+        admin_app.register(CategoryResource)
         admin_app.register(ProductResource)
         admin_app.register(ProductSerialNumberResource)
         admin_app.register(NewResource)

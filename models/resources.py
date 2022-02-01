@@ -8,7 +8,7 @@ from fastapi_admin.resources import Action, Field, Link, Model
 from fastapi_admin.widgets import displays, filters, inputs
 from fastapi_admin.file_upload import FileUpload
 
-from models.models import Product, New, ProductSerialNumber
+from models.models import Product, New, ProductSerialNumber, Category
 
 from settings import IMG_DIR
 
@@ -33,6 +33,46 @@ doc_upload = MarketPlaceAdminFileUpload(
     prefix="",
     filename_generator=filename_generator,
 )
+
+
+class CategoryResource(Model):
+    label = "Categories"
+    model = Category
+    page_pre_title = "Categories"
+    page_title = "Categories"
+    filters = [
+        filters.Search(
+            name="name",
+            label="Category name",
+            search_mode="contains",
+            placeholder="Search for product name",
+        ),
+    ]
+    fields = [
+        "id",
+        Field(
+            name="name",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_fr",
+            label="",
+            input_=inputs.Text(),
+        ),
+        "created_at",
+        "updated_at",
+    ]
 
 
 class ProductResource(Model):
@@ -141,6 +181,12 @@ class ProductResource(Model):
             label="",
             input_=inputs.Image(upload=doc_upload, null=True),
         ),
+        Field(
+            name="article_number",
+            label="",
+            input_=inputs.Text(),
+        ),
+        "category",
         "created_at",
         "updated_at",
     ]
@@ -238,11 +284,7 @@ class NewResource(Model):
             label="",
             input_=inputs.Image(upload=doc_upload, null=True),
         ),
-        Field(
-            name="product",
-            label="",
-            input_=inputs.ForeignKey(model=Product, null=True),
-        ),
+        "product",
         "created_at",
         "updated_at",
     ]

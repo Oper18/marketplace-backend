@@ -13,12 +13,14 @@ from .response_models import (
     ProductListResponse,
     NewsListResponse,
     ProductResponse,
+    CategoryListResponse,
+    CategoryResponse,
 )
 from .request_models import SerialNumberRequest
 
 from response_models import Error40xResponse
 
-from models.models import Product, New, ProductSerialNumber
+from models.models import Product, New, ProductSerialNumber, Category
 
 from settings import IMG_PATH
 
@@ -59,6 +61,45 @@ async def get_records(
 
 
 @router.get(
+    "/categories",
+    responses={
+        200: {
+            "model": CategoryListResponse,
+            "description": "products list with full count",
+        },
+        400: {
+            "model": Error40xResponse,
+            "description": "something wrong",
+        },
+    },
+    summary="Product list",
+)
+@replace_lang
+async def get_products(
+    request: Request,
+    response: Response,
+    category_id: Optional[int] = Query(None, description="product pk"),
+    limit: Optional[int] = Query(10, description="amount of returned products"),
+    offset: Optional[int] = Query(0, description="amount of scrolled products"),
+    lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
+) -> ProductListResponse:
+    categories_count, categories = await get_records(
+        model=Category,
+        pk=category_id,
+        limit=limit,
+        offset=offset,
+    )
+    categories = await categories
+
+    res = {
+        "count": categories_count,
+        "products": [await c.as_dict() for c in categories],
+    }
+
+    return CategoryListResponse.parse_obj(res)
+
+
+@router.get(
     "/products",
     responses={
         200: {
@@ -96,6 +137,11 @@ async def get_products(
     for p in products:
         pd = await p.as_dict(lang=lang)
         pd["img"] = os.path.join(IMG_PATH, os.path.basename(pd["img"])) if pd.get("img") else None
+        if p.category:
+            product_category = await p.category.first()
+            pd["category"] = await product_category.as_dict()
+        else:
+            pd["category"] = None
         res["products"].append(pd)
 
     return ProductListResponse.parse_obj(res)

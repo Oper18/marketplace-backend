@@ -16,6 +16,21 @@ class Admin(AbstractAdmin):
     pass
 
 
+class Category(Model, ExtendedModel):
+    _translated_fields = ("name",)
+
+    id = fields.IntField(pk=True)
+    name = fields.CharField(max_length=256)
+    name_en = fields.CharField(max_length=256, null=True)
+    name_de = fields.CharField(max_length=256, null=True)
+    name_fr = fields.CharField(max_length=256, null=True)
+    created_at = fields.DatetimeField(auto_now_add=True)
+    updated_at = fields.DatetimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.id} {self.name}"
+
+
 class Product(Model, ExtendedModel):
     _translated_fields = ("name", "full_name", "description", "sketcehs")
 
@@ -36,6 +51,10 @@ class Product(Model, ExtendedModel):
     sketches_en = fields.CharField(max_length=2048, null=True)
     sketches_de = fields.CharField(max_length=2048, null=True)
     sketches_fr = fields.CharField(max_length=2048, null=True)
+    article_number = fields.CharField(max_length=128, null=True)
+    category = fields.ForeignKeyField(
+        "models.Category", related_name="products", null=True
+    )
     img = fields.CharField(max_length=64)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
