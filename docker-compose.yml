@@ -39,6 +39,10 @@ services:
       - DB_HOST=${DB_HOST}
       - SERVER_SALT=${SERVER_SALT}
       - SERVER_SECRET=${SERVER_SECRET}
+      - EMAIL_LOGIN=${EMAIL_LOGIN}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_SERVER=${EMAIL_SERVER}
+      - EMAIL_ADDR=${EMAIL_ADDR}
     volumes:
       - ${BACKEND}:/app
     depends_on:

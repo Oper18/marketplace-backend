@@ -97,8 +97,17 @@ async def get_products(
 
     res = {
         "count": categories_count,
-        "products": [await c.as_dict() for c in categories],
+        "categories": [],
     }
+    for c in categories:
+        cd = await c.as_dict()
+        cd["manufacturers"] = {}
+        for p in await c.products.all():
+            if p.manufacturer:
+                pm = await p.manufacturer.first()
+                cd["manufacturers"][pm.id] = await pm.as_dict()
+        cd["manufacturers"] = list(cd["manufacturers"].values())
+        res["categories"].append(cd)
 
     return CategoryListResponse.parse_obj(res)
 
@@ -123,16 +132,22 @@ async def get_products(
     response: Response,
     product_id: Optional[int] = Query(None, description="product pk"),
     category_id: Optional[int] = Query(None, description="category pk"),
+    manufacturer_id: Optional[int] = Query(None, description="manufacturer pk"),
     limit: Optional[int] = Query(10, description="amount of returned products"),
     offset: Optional[int] = Query(0, description="amount of scrolled products"),
     lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
 ) -> ProductListResponse:
+    additional_filter = {}
+    if category_id:
+        additional_filter["category__pk"] = category_id
+    if manufacturer_id:
+        additional_filter["manufacturer__pk"] = manufacturer_id
     products_count, products = await get_records(
         model=Product,
         pk=product_id,
         limit=limit,
         offset=offset,
-        additional_filter={"category__pk": category_id} if category_id else {},
+        additional_filter=additional_filter,
     )
     products = await products
 
@@ -148,6 +163,11 @@ async def get_products(
             pd["category"] = await product_category.as_dict()
         else:
             pd["category"] = None
+        if p.manufacturer:
+            product_manufacturer = await p.manufacturer.first()
+            pd["manufacturer"] = await product_manufacturer.as_dict()
+        else:
+            pd["manufacturer"] = None
         res["products"].append(pd)
 
     return ProductListResponse.parse_obj(res)

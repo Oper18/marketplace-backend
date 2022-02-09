@@ -5,11 +5,22 @@ from typing import Optional, List
 from pydantic import BaseModel, Field
 
 
+class ManufacturerResponse(BaseModel):
+    id: int = Field(description="category pk")
+    name: Optional[str] = Field(description="category name")
+    created_at: str = Field(description="date of record creation")
+    updated_at: str = Field(description="date of record last update")
+
+
 class CategoryResponse(BaseModel):
     id: int = Field(description="category pk")
     name: Optional[str] = Field(description="category name")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")
+
+
+class CategoryManufacturerResponse(CategoryResponse):
+    manufacturers: Optional[List[ManufacturerResponse]] = Field(description="list of manufacturers in category products")
 
 
 class ProductResponse(BaseModel):
@@ -20,13 +31,14 @@ class ProductResponse(BaseModel):
     sketches: Optional[str] = Field(description="product short description")
     img: Optional[str] = Field(description="product img filepath")
     category: Optional[CategoryResponse] = Field(description="category description")
+    manufacturer: Optional[ManufacturerResponse] = Field(description="category description")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")
 
 
 class CategoryListResponse(BaseModel):
     count: int = Field(description="full amount of categories records")
-    products: List[CategoryResponse] = Field(description="categories list")
+    categories: List[CategoryManufacturerResponse] = Field(description="categories list")
 
 
 class ProductListResponse(BaseModel):

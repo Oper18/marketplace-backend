@@ -8,7 +8,8 @@ from fastapi_admin.resources import Action, Field, Link, Model
 from fastapi_admin.widgets import displays, filters, inputs
 from fastapi_admin.file_upload import FileUpload
 
-from models.models import Product, New, ProductSerialNumber, Category
+from models.models import Product, New, ProductSerialNumber, Category, \
+    Manufacturer, Bid
 
 from settings import IMG_DIR
 
@@ -44,8 +45,48 @@ class CategoryResource(Model):
         filters.Search(
             name="name",
             label="Category name",
-            search_mode="contains",
-            placeholder="Search for product name",
+            search_mode="icontains",
+            placeholder="Search for category name",
+        ),
+    ]
+    fields = [
+        "id",
+        Field(
+            name="name",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_en",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_de",
+            label="",
+            input_=inputs.Text(),
+        ),
+        Field(
+            name="name_fr",
+            label="",
+            input_=inputs.Text(),
+        ),
+        "created_at",
+        "updated_at",
+    ]
+
+
+class ManufacturerResource(Model):
+    label = "Manufacturers"
+    model = Manufacturer
+    page_pre_title = "Manufacturers"
+    page_title = "Manufacturers"
+    filters = [
+        filters.Search(
+            name="name",
+            label="Manufacturer name",
+            search_mode="iontains",
+            placeholder="Search for category name",
         ),
     ]
     fields = [
@@ -84,13 +125,13 @@ class ProductResource(Model):
         filters.Search(
             name="name",
             label="Product name",
-            search_mode="contains",
+            search_mode="icontains",
             placeholder="Search for product name",
         ),
         filters.Search(
             name="full_name",
             label="Product full name",
-            search_mode="contains",
+            search_mode="icontains",
             placeholder="Search for product full name",
         ),
     ]
@@ -187,6 +228,7 @@ class ProductResource(Model):
             input_=inputs.Text(),
         ),
         "category",
+        "manufacturer",
         "created_at",
         "updated_at",
     ]
@@ -285,6 +327,27 @@ class NewResource(Model):
             input_=inputs.Image(upload=doc_upload, null=True),
         ),
         "product",
+        "created_at",
+        "updated_at",
+    ]
+
+
+class BidResource(Model):
+    label = "Bids"
+    model = Bid
+    page_pre_title = "Bids"
+    page_title = "Bids"
+    filters = [
+        filters.Search(
+            name="contacts",
+            label="Contacts",
+            search_mode="icontains",
+            placeholder="Search for bid contacts",
+        ),
+    ]
+    fields = [
+        "id",
+        "contacts",
         "created_at",
         "updated_at",
     ]

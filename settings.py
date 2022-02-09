@@ -2,6 +2,8 @@
 
 import os
 
+from fastapi_mail import ConnectionConfig
+
 DATABASE = {
     "user": os.environ.get('DB_USER', 'marketplace'),
     "password": os.environ.get('DB_PASSWORD', 'marketplace'),
@@ -40,3 +42,16 @@ STATIC_PATH = "/static"
 IMG_DIR = os.path.join(STATIC_DIR, "img")
 IMG_PATH = os.path.join(STATIC_PATH, "img")
 os.makedirs(os.path.join(STATIC_DIR, "img"), exist_ok=True)
+
+EMAIL_ADDR = os.environ.get("EMAIL_ADDR", "test@test.test")
+MAIL_CONF = ConnectionConfig(
+    MAIL_USERNAME = os.environ.get("EMAIL_LOGIN", ""),
+    MAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", ""),
+    MAIL_FROM = EMAIL_ADDR,
+    MAIL_PORT = 465,
+    MAIL_SERVER = os.environ.get("EMAIL_SERVER", ""),
+    MAIL_TLS = False,
+    MAIL_SSL = True,
+    USE_CREDENTIALS = True,
+    VALIDATE_CERTS = True
+)

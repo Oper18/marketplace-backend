@@ -30,9 +30,10 @@ import aioredis
 from settings import DATABASE, BASEDIR, REDIS
 
 from v1.shop import shop
+from v1.util import util
 
 from models.resources import ProductResource, ProductSerialNumberResource, \
-    NewResource, CategoryResource
+    NewResource, CategoryResource, ManufacturerResource, BidResource
 from models.extensions import AnonymousUser
 from models.models import Admin
 
@@ -131,6 +132,7 @@ def create_app():
     _app.mount("/admin", admin_app)
 
     _app.include_router(shop.router)
+    _app.include_router(util.router)
 
     # _app.add_middleware(
     #     CORSMiddleware,
@@ -164,9 +166,11 @@ def create_app():
             redis=redis,
         )
         admin_app.register(CategoryResource)
+        admin_app.register(ManufacturerResource)
         admin_app.register(ProductResource)
         admin_app.register(ProductSerialNumberResource)
         admin_app.register(NewResource)
+        admin_app.register(BidResource)
 
     return _app
 

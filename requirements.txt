@@ -38,3 +38,4 @@ uvloop
 watchgod
 websockets
 aiofile
+fastapi-mail

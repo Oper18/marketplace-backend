@@ -1,0 +1,9 @@
+-- upgrade --
+CREATE TABLE IF NOT EXISTS "bid" (
+    "id" SERIAL NOT NULL PRIMARY KEY,
+    "contacts" TEXT,
+    "created_at" TIMESTAMPTZ NOT NULL  DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ NOT NULL  DEFAULT CURRENT_TIMESTAMP
+);
+-- downgrade --
+DROP TABLE IF EXISTS "bid";
