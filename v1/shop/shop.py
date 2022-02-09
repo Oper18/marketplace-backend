@@ -47,13 +47,17 @@ async def get_records(
     pk: Optional[int] = None,
     limit: Optional[int] = 10,
     offset: Optional[int] = 0,
+    additional_filter: Optional[dict] = {},
 ):
     amount = await model.all().count()
     if pk:
         model = model.filter(id=pk)
     else:
+        if additional_filter:
+            model = model.filter(**additional_filter)
+        else:
+            model = model.all()
         model = model.\
-            all().\
             limit(limit).\
             offset(offset)
 
@@ -78,7 +82,7 @@ async def get_records(
 async def get_products(
     request: Request,
     response: Response,
-    category_id: Optional[int] = Query(None, description="product pk"),
+    category_id: Optional[int] = Query(None, description="category pk"),
     limit: Optional[int] = Query(10, description="amount of returned products"),
     offset: Optional[int] = Query(0, description="amount of scrolled products"),
     lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
@@ -118,6 +122,7 @@ async def get_products(
     request: Request,
     response: Response,
     product_id: Optional[int] = Query(None, description="product pk"),
+    category_id: Optional[int] = Query(None, description="category pk"),
     limit: Optional[int] = Query(10, description="amount of returned products"),
     offset: Optional[int] = Query(0, description="amount of scrolled products"),
     lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
@@ -127,6 +132,7 @@ async def get_products(
         pk=product_id,
         limit=limit,
         offset=offset,
+        additional_filter={"category__pk": category_id} if category_id else {},
     )
     products = await products
 
