@@ -32,6 +32,7 @@ class ProductResponse(BaseModel):
     img: Optional[str] = Field(description="product img filepath")
     category: Optional[CategoryResponse] = Field(description="category description")
     manufacturer: Optional[ManufacturerResponse] = Field(description="category description")
+    volume: Optional[str] = Field(description="product volume or weight")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")
 

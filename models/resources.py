@@ -227,6 +227,11 @@ class ProductResource(Model):
             label="",
             input_=inputs.Text(),
         ),
+        Field(
+            name="volume",
+            label="",
+            input_=inputs.Text(),
+        ),
         "category",
         "manufacturer",
         "created_at",
@@ -347,7 +352,9 @@ class BidResource(Model):
     ]
     fields = [
         "id",
-        "contacts",
+        "name",
+        "email",
+        "message",
         "created_at",
         "updated_at",
     ]

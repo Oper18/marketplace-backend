@@ -74,6 +74,7 @@ class Product(Model, ExtendedModel):
         "models.Manufacturer", related_name="products", null=True
     )
     img = fields.CharField(max_length=64)
+    volume = fields.CharField(null=True, max_length=128)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 
@@ -122,7 +123,9 @@ class New(Model, ExtendedModel):
 
 class Bid(Model, ExtendedModel):
     id = fields.IntField(pk=True)
-    contacts = fields.TextField(null=True)
+    name = fields.CharField(null=True, max_length=256)
+    email = fields.CharField(null=True, max_length=256)
+    message = fields.TextField(null=True)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 

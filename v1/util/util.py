@@ -40,12 +40,16 @@ async def send_bid(
     response: Response,
     contacts: BidRequest,
 ) -> Error40xResponse:
-    await Bid.create(contacts=contacts.contacts)
+    await Bid.create(
+        name=contacts.name,
+        email=contacts.email,
+        message=contacts.message,
+    )
     try:
         message = MessageSchema(
             subject="Bid for product",
             recipients=[EMAIL_ADDR],
-            body="<h1>New bid</h1><p>{}</p>".format(contacts.contacts),
+            body="<h1>New bid from {}</h1><p>{}</p><p>Contact me: {}</p>".format(contacts.name, contacts.message, contacts.email),
             subtype="html",
             )
 
