@@ -6,4 +6,4 @@ from pydantic import BaseModel, Field
 
 
 class SerialNumberRequest(BaseModel):
-    serial_number: int = Field(description="Product serial number")
+    serial_number: str = Field(description="Product serial number")

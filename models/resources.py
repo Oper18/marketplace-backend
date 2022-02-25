@@ -248,7 +248,7 @@ class ProductSerialNumberResource(Model):
         filters.Search(
             name="serial_number",
             label="Serial number",
-            search_mode="contains",
+            search_mode="icontains",
             placeholder="Search for product serial number",
         ),
         filters.Search(
@@ -263,7 +263,7 @@ class ProductSerialNumberResource(Model):
         Field(
             name="serial_number",
             label="",
-            input_=inputs.Number(),
+            input_=inputs.Text(),
         ),
         "product",
         "created_at",

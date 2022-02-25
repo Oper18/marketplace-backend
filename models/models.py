@@ -86,7 +86,7 @@ class ProductSerialNumber(Model, ExtendedModel):
     _exclude = ("product",)
 
     id = fields.IntField(pk=True)
-    serial_number = fields.IntField(unique=True)
+    serial_number = fields.CharField(max_length=256, unique=True)
     product = fields.ForeignKeyField(
         "models.Product", related_name='serial_numbers'
     )
