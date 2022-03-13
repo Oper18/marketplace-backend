@@ -73,7 +73,7 @@ class Product(Model, ExtendedModel):
     manufacturer = fields.ForeignKeyField(
         "models.Manufacturer", related_name="products", null=True
     )
-    img = fields.CharField(max_length=64)
+    img = fields.CharField(max_length=64, null=True)
     volume = fields.CharField(null=True, max_length=128)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
