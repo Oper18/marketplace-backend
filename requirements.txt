@@ -39,3 +39,4 @@ watchgod
 websockets
 aiofile
 fastapi-mail
+openpyxl

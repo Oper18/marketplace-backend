@@ -33,6 +33,7 @@ class ProductResponse(BaseModel):
     category: Optional[CategoryResponse] = Field(description="category description")
     manufacturer: Optional[ManufacturerResponse] = Field(description="category description")
     volume: Optional[str] = Field(description="product volume or weight")
+    article_number: Optional[str] = Field(description="product article number")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")
 
