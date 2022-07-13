@@ -62,10 +62,10 @@ class Product(Model, ExtendedModel):
     description_en = fields.TextField(null=True)
     description_de = fields.TextField(null=True)
     description_fr = fields.TextField(null=True)
-    sketches = fields.CharField(max_length=2048)
-    sketches_en = fields.CharField(max_length=2048, null=True)
-    sketches_de = fields.CharField(max_length=2048, null=True)
-    sketches_fr = fields.CharField(max_length=2048, null=True)
+    sketches = fields.TextField()
+    sketches_en = fields.TextField(null=True)
+    sketches_de = fields.TextField(null=True)
+    sketches_fr = fields.TextField(null=True)
     article_number = fields.CharField(max_length=128, null=True)
     category = fields.ForeignKeyField(
         "models.Category", related_name="products", null=True
@@ -88,7 +88,7 @@ class ProductSerialNumber(Model, ExtendedModel):
     id = fields.IntField(pk=True)
     serial_number = fields.CharField(max_length=256, unique=True)
     product = fields.ForeignKeyField(
-        "models.Product", related_name='serial_numbers'
+        "models.Product", related_name='serial_numbers', null=True
     )
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
