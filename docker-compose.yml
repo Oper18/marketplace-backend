@@ -55,6 +55,7 @@ services:
     volumes:
       - ${NGINX_CONFIG}:/etc/nginx/conf.d/default.conf
       - ${BACKEND}:/var/www/marketplace
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
       - 443:443
