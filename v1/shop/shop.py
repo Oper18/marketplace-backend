@@ -246,9 +246,12 @@ async def check_article_number(
         first()
     if ser_num:
         res = await ser_num.product
-        res = await res.as_dict(lang=lang)
-        res["img"] = os.path.join(IMG_PATH, os.path.basename(res["img"])) if res.get("img") else None
-        return ProductResponse.parse_obj(res)
+        if res:
+            res = await res.as_dict(lang=lang)
+            res["img"] = os.path.join(IMG_PATH, os.path.basename(res["img"])) if res.get("img") else None
+            return ProductResponse.parse_obj(res)
+        else:
+            return Error40xResponse(reason="serial number exist")
     return Error40xResponse.parse_obj(
         {"reason": "wrong serial number"}
     )
