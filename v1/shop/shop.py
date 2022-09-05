@@ -49,14 +49,15 @@ async def get_records(
     offset: Optional[int] = 0,
     additional_filter: Optional[dict] = {},
 ):
-    amount = await model.all().count()
     if pk:
+        amount = 1
         model = model.filter(id=pk)
     else:
         if additional_filter:
             model = model.filter(**additional_filter)
         else:
             model = model.all()
+        amount = await model.count()
         model = model.\
             limit(limit).\
             offset(offset)
