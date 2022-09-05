@@ -1,11 +1,12 @@
 # coding: utf-8
 
-from typing import Any, Type
+from typing import Any, Type, Optional
 
 import datetime
 
 from tortoise.models import Model, MODEL
 from tortoise import fields
+from tortoise.backends.base.client import BaseDBAsyncClient
 
 from fastapi_admin.models import AbstractAdmin
 
@@ -95,6 +96,15 @@ class ProductSerialNumber(Model, ExtendedModel):
 
     def __str__(self):
         return f"{self.id} {self.serial_number}"
+
+    @classmethod
+    async def create(
+        cls: Type[MODEL], using_db: Optional[BaseDBAsyncClient] = None, **kwargs: Any
+    ) -> MODEL:
+        if not kwargs.get("product_id"):
+            kwargs["product_id"] = None
+
+        await super().create(using_db, **kwargs)
 
 
 class New(Model, ExtendedModel):

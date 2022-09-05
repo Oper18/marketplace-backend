@@ -80,7 +80,7 @@ async def get_records(
     summary="Product list",
 )
 @replace_lang
-async def get_products(
+async def get_categories_handler(
     request: Request,
     response: Response,
     category_id: Optional[int] = Query(None, description="category pk"),
@@ -252,7 +252,8 @@ async def check_article_number(
             res["img"] = os.path.join(IMG_PATH, os.path.basename(res["img"])) if res.get("img") else None
             return ProductResponse.parse_obj(res)
         else:
-            return Error40xResponse(reason="serial number exist")
+            return Error40xResponse(reason="You have purchased a genuine infinity meds product.\nWe are waiting for you again on our website.")
+    response.status_code = status.HTTP_400_BAD_REQUEST
     return Error40xResponse.parse_obj(
-        {"reason": "wrong serial number"}
+        {"reason": "You have bought a fake Infinity Meds product. Contact administrators.\nWe are waiting for you again on our website."}
     )
