@@ -15,6 +15,7 @@ class ManufacturerResponse(BaseModel):
 class CategoryResponse(BaseModel):
     id: int = Field(description="category pk")
     name: Optional[str] = Field(description="category name")
+    img: Optional[str] = Field(description="product img filepath")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")
 
@@ -56,6 +57,7 @@ class NewResponse(BaseModel):
         description="new product response if exist"
     )
     banner: Optional[str] = Field(description="new banner path")
+    new_type: Optional[int] = Field(description="type of new: 1 - new for head dropdown")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")
 

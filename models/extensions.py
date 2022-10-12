@@ -3,6 +3,8 @@
 import datetime
 import uuid
 
+from enum import Enum
+
 
 class ExtendedModel:
 
@@ -37,3 +39,8 @@ class AnonymousUser(ExtendedModel):
     @property
     def is_anonymous(self):
         return True
+
+
+class NewsType(Enum):
+    top_drop_down = 1
+

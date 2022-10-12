@@ -71,6 +71,11 @@ class CategoryResource(Model):
             label="",
             input_=inputs.Text(),
         ),
+        Field(
+            name="img",
+            label="",
+            input_=inputs.Image(upload=doc_upload, null=True),
+        ),
         "created_at",
         "updated_at",
     ]
@@ -294,17 +299,17 @@ class NewResource(Model):
         Field(
             name="head_en",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="head_de",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="head_fr",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="text",
@@ -314,23 +319,24 @@ class NewResource(Model):
         Field(
             name="text_en",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="text_de",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="text_fr",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="banner",
             label="",
             input_=inputs.Image(upload=doc_upload, null=True),
         ),
+        "new_type",
         "product",
         "created_at",
         "updated_at",

@@ -10,7 +10,7 @@ from tortoise.backends.base.client import BaseDBAsyncClient
 
 from fastapi_admin.models import AbstractAdmin
 
-from models.extensions import ExtendedModel
+from models.extensions import ExtendedModel, NewsType
 
 
 class Admin(AbstractAdmin):
@@ -25,6 +25,7 @@ class Category(Model, ExtendedModel):
     name_en = fields.CharField(max_length=256, null=True)
     name_de = fields.CharField(max_length=256, null=True)
     name_fr = fields.CharField(max_length=256, null=True)
+    img = fields.CharField(max_length=64, null=True)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 
@@ -124,11 +125,28 @@ class New(Model, ExtendedModel):
         "models.Product", related_name='news', null=True
     )
     banner = fields.CharField(max_length=64, null=True)
+    new_type = fields.IntField(null=True, unique=True)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.id} {self.head}"
+
+    @classmethod
+    async def create(
+        cls: Type[MODEL], using_db: Optional[BaseDBAsyncClient] = None, **kwargs: Any
+    ) -> MODEL:
+        if not kwargs.get("new_type"):
+            kwargs["new_type"] = None
+        elif kwargs.get("new_type") \
+            and kwargs.get("new_type") not in [
+                str(nt.value) for nt in NewsType.__members__.values()
+            ]:
+            kwargs["new_type"] = None
+        if not kwargs.get("product_id"):
+            kwargs["product_id"] = None
+
+        await super().create(using_db, **kwargs)
 
 
 class Bid(Model, ExtendedModel):

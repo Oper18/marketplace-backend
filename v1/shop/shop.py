@@ -102,6 +102,7 @@ async def get_categories_handler(
     }
     for c in categories:
         cd = await c.as_dict()
+        cd["img"] = os.path.join(IMG_PATH, os.path.basename(cd["img"])) if cd.get("img") else None
         cd["manufacturers"] = {}
         for p in await c.products.all():
             if p.manufacturer:
@@ -193,15 +194,20 @@ async def get_news(
     request: Request,
     response: Response,
     new_id: Optional[int] = Query(None, description="new pk"),
+    new_type: Optional[int] = Query(None, description="new type: 1 - for head dropdown"),
     limit: Optional[int] = Query(10, description="amount of returned news"),
     offset: Optional[int] = Query(0, description="amount of scrolled news"),
     lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
 ) -> NewsListResponse:
+    additional_filter = dict()
+    if new_type:
+        additional_filter["new_type"] = new_type
     news_count, news = await get_records(
         model=New,
         pk=new_id,
         limit=limit,
         offset=offset,
+        additional_filter=additional_filter,
     )
     news = await news.prefetch_related("product")
     res = {
