@@ -100,12 +100,13 @@ class ProductSerialNumber(Model, ExtendedModel):
 
     @classmethod
     async def create(
-        cls: Type[MODEL], using_db: Optional[BaseDBAsyncClient] = None, **kwargs: Any
+        #  cls: Type[MODEL], using_db: Optional[BaseDBAsyncClient] = None, **kwargs: Any
+        cls: Type[MODEL], **kwargs: Any
     ) -> MODEL:
         if not kwargs.get("product_id"):
             kwargs["product_id"] = None
 
-        await super().create(using_db, **kwargs)
+        await super().create(**kwargs)
 
 
 class New(Model, ExtendedModel):
@@ -134,7 +135,8 @@ class New(Model, ExtendedModel):
 
     @classmethod
     async def create(
-        cls: Type[MODEL], using_db: Optional[BaseDBAsyncClient] = None, **kwargs: Any
+        #  cls: Type[MODEL], using_db: Optional[BaseDBAsyncClient] = None, **kwargs: Any
+        cls: Type[MODEL], **kwargs: Any
     ) -> MODEL:
         if not kwargs.get("new_type"):
             kwargs["new_type"] = None
@@ -146,7 +148,7 @@ class New(Model, ExtendedModel):
         if not kwargs.get("product_id"):
             kwargs["product_id"] = None
 
-        await super().create(using_db, **kwargs)
+        await super().create(**kwargs)
 
 
 class Bid(Model, ExtendedModel):
