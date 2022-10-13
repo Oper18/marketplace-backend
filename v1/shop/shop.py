@@ -101,13 +101,13 @@ async def get_categories_handler(
         "categories": [],
     }
     for c in categories:
-        cd = await c.as_dict()
+        cd = await c.as_dict(lang=lang)
         cd["img"] = os.path.join(IMG_PATH, os.path.basename(cd["img"])) if cd.get("img") else None
         cd["manufacturers"] = {}
         for p in await c.products.all():
             if p.manufacturer:
                 pm = await p.manufacturer.first()
-                cd["manufacturers"][pm.id] = await pm.as_dict()
+                cd["manufacturers"][pm.id] = await pm.as_dict(lang=lang)
         cd["manufacturers"] = list(cd["manufacturers"].values())
         res["categories"].append(cd)
 
@@ -162,12 +162,12 @@ async def get_products(
         pd["img"] = os.path.join(IMG_PATH, os.path.basename(pd["img"])) if pd.get("img") else None
         if p.category:
             product_category = await p.category.first()
-            pd["category"] = await product_category.as_dict()
+            pd["category"] = await product_category.as_dict(lang=lang)
         else:
             pd["category"] = None
         if p.manufacturer:
             product_manufacturer = await p.manufacturer.first()
-            pd["manufacturer"] = await product_manufacturer.as_dict()
+            pd["manufacturer"] = await product_manufacturer.as_dict(lang=lang)
         else:
             pd["manufacturer"] = None
         res["products"].append(pd)

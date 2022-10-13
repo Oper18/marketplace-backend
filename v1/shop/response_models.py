@@ -15,6 +15,9 @@ class ManufacturerResponse(BaseModel):
 class CategoryResponse(BaseModel):
     id: int = Field(description="category pk")
     name: Optional[str] = Field(description="category name")
+    head: Optional[str] = Field(description="category head")
+    title: Optional[str] = Field(description="category title")
+    description: Optional[str] = Field(description="category description")
     img: Optional[str] = Field(description="product img filepath")
     created_at: str = Field(description="date of record creation")
     updated_at: str = Field(description="date of record last update")

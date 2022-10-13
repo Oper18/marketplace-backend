@@ -59,17 +59,77 @@ class CategoryResource(Model):
         Field(
             name="name_en",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="name_de",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="name_fr",
             label="",
-            input_=inputs.Text(),
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="head",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="head_en",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="head_de",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="head_fr",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="title",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="title_en",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="title_de",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="title_fr",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="description",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="description_en",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="description_de",
+            label="",
+            input_=inputs.Text(null=True),
+        ),
+        Field(
+            name="description_fr",
+            label="",
+            input_=inputs.Text(null=True),
         ),
         Field(
             name="img",

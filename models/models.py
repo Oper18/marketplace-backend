@@ -18,13 +18,25 @@ class Admin(AbstractAdmin):
 
 
 class Category(Model, ExtendedModel):
-    _translated_fields = ("name",)
+    _translated_fields = ("name", "head", "title", "description")
 
     id = fields.IntField(pk=True)
     name = fields.CharField(max_length=256)
     name_en = fields.CharField(max_length=256, null=True)
     name_de = fields.CharField(max_length=256, null=True)
     name_fr = fields.CharField(max_length=256, null=True)
+    head = fields.CharField(max_length=256, null=True)
+    head_en = fields.CharField(max_length=256, null=True)
+    head_de = fields.CharField(max_length=256, null=True)
+    head_fr = fields.CharField(max_length=256, null=True)
+    title = fields.CharField(max_length=256, null=True)
+    title_en = fields.CharField(max_length=256, null=True)
+    title_de = fields.CharField(max_length=256, null=True)
+    title_fr = fields.CharField(max_length=256, null=True)
+    description = fields.CharField(max_length=256, null=True)
+    description_en = fields.CharField(max_length=256, null=True)
+    description_de = fields.CharField(max_length=256, null=True)
+    description_fr = fields.CharField(max_length=256, null=True)
     img = fields.CharField(max_length=64, null=True)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
