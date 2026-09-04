@@ -87,7 +87,7 @@ async def get_categories_handler(
     limit: Optional[int] = Query(10, description="amount of returned products"),
     offset: Optional[int] = Query(0, description="amount of scrolled products"),
     lang: Optional[str] = Query("ru", description="iso 2 symbols format of language"),
-) -> ProductListResponse:
+) -> CategoryListResponse:
     categories_count, categories = await get_records(
         model=Category,
         pk=category_id,
