@@ -1,42 +1,51 @@
-aerich
-aiofiles
-aioredis
-aiosqlite
-asgiref
-async-timeout
-asyncpg
-babel
-bcrypt
-cffi
-click
-ddlparse
-dictdiffer
-fastapi-admin
-fastapi
-h11
-hiredis
-httptools
-markupsafe
-pendulum
-pycparser
-pydantic
-pyjwt
-pyparsing
-pypika-tortoise
-python-dateutil
-python-dotenv
-python-multipart
-pytz
-pytzdata
-pyyaml
-six
-starlette
-tortoise-orm
-typing-extensions
-uvicorn[standard]
-uvloop
-watchgod
-websockets
-aiofile
-fastapi-mail
-openpyxl
+# Verified compatible set for marketplace-backend
+# Target: Python 3.11 / 3.12 (update Dockerfile from python:3.9.5)
+# Resolved & pinned 2026-07-19
+
+# --- Web framework ---
+# fastapi 0.109.2 pulls starlette 0.36.x, which still supports the old
+# TemplateResponse(name, context) signature that fastapi-admin uses.
+fastapi==0.109.2
+starlette==0.36.3
+pydantic==2.13.4
+pydantic-settings==2.14.2
+uvicorn[standard]==0.51.0
+
+# --- Admin panel (unmaintained; requires starlette < 0.37) ---
+fastapi-admin==1.0.4
+
+# --- Mail ---
+# 1.4.2 = new MAIL_STARTTLS/MAIL_SSL_TLS field names + pydantic v2,
+# but still compatible with starlette < 1.0 (unlike fastapi-mail >= 1.5)
+fastapi-mail==1.4.2
+
+# --- Redis ---
+# Fork of dead aioredis with the distutils/py3.12 fix, pinned to commit
+aioredis @ git+https://github.com/Oper18/aioredis-py.git@46b2fba9eac63cc9b09548e4315a5eb19b31ce18
+hiredis==3.4.0
+async-timeout==5.0.1
+
+# --- ORM / migrations ---
+# tortoise >= 0.24 imports fastapi.routing._merge_lifespan_context (needs fastapi >= 0.112),
+# so 0.23.0 is the newest version compatible with fastapi 0.109.x
+tortoise-orm[asyncpg]==0.23.0
+aerich==0.8.2
+pypika-tortoise==0.3.2
+aiosqlite==0.20.0
+asyncpg==0.31.0
+
+# --- Auth ---
+PyJWT==2.13.0
+bcrypt==5.0.0
+
+# --- Utilities ---
+aiofiles==25.1.0
+aiofile==3.11.1
+python-dotenv==1.2.2
+python-multipart==0.0.32
+PyYAML==6.0.3
+openpyxl==3.1.5
+pendulum==3.2.0
+babel==2.18.0
+python-dateutil==2.9.0.post0
+pytz==2026.2

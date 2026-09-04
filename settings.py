@@ -50,8 +50,8 @@ MAIL_CONF = ConnectionConfig(
     MAIL_FROM = EMAIL_ADDR,
     MAIL_PORT = 465,
     MAIL_SERVER = os.environ.get("EMAIL_SERVER", ""),
-    MAIL_TLS = False,
-    MAIL_SSL = True,
+    MAIL_STARTTLS = False,
+    MAIL_SSL_TLS = True,
     USE_CREDENTIALS = True,
     VALIDATE_CERTS = True
 )

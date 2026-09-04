@@ -1,11 +1,10 @@
-FROM python:3.9.5
+FROM python:3.11
 
 RUN mkdir /app
 WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 
-RUN apt-get update -y \
- && pip install --upgrade pip \
+RUN pip install --upgrade pip \
  && pip install -r requirements.txt \
  && apt-get clean
 

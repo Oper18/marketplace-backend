@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block page_body %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ resource_label }} &mdash; import</h3>
+            </div>
+            <div class="card-body border-bottom py-3">
+                <p class="text-muted">
+                    Upload a .txt file with one serial number per line. Codes are
+                    inserted with no product attached (product = null) and
+                    duplicates of already-existing serial numbers are skipped.
+                </p>
+                <form
+                        method="post"
+                        action="{{ request.app.admin_path }}/{{ resource }}/import"
+                        enctype="multipart/form-data"
+                >
+                    <div class="mb-3">
+                        <input type="file" name="file" accept=".txt" class="form-control" required />
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary">{{ _('save') }}</button>
+                        <a type="button" class="btn btn-secondary"
+                           href="{{ request.app.admin_path }}/{{ resource }}/list">{{ _('return') }}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
