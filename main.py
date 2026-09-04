@@ -32,6 +32,8 @@ from settings import DATABASE, BASEDIR, REDIS
 from v1.shop import shop
 from v1.util import util
 
+from admin_import_routes import router as admin_import_router
+
 from models.resources import ProductResource, ProductSerialNumberResource, \
     NewResource, CategoryResource, ManufacturerResource, BidResource
 from models.extensions import AnonymousUser
@@ -108,6 +110,7 @@ def create_app():
     )
     admin_app.add_middleware(BaseHTTPMiddleware, dispatch=middlewares.language_processor)
     admin_app.include_router(router)
+    admin_app.include_router(admin_import_router)
 
     @admin_app.get("/")
     async def home(

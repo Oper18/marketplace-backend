@@ -4,9 +4,10 @@ import os
 import uuid
 import aiofiles
 
-from fastapi_admin.resources import Action, Field, Link, Model
+from fastapi_admin.resources import Action, Field, Link, Model, ToolbarAction
 from fastapi_admin.widgets import displays, filters, inputs
 from fastapi_admin.file_upload import FileUpload
+from fastapi_admin.enums import Method
 
 from models.models import Product, New, ProductSerialNumber, Category, \
     Manufacturer, Bid
@@ -334,6 +335,20 @@ class ProductSerialNumberResource(Model):
         "created_at",
         "updated_at",
     ]
+
+    async def get_toolbar_actions(self, request):
+        actions = await super().get_toolbar_actions(request)
+        actions.append(
+            ToolbarAction(
+                label="Import from .txt",
+                icon="fas fa-file-import",
+                name="import",
+                method=Method.GET,
+                ajax=False,
+                class_="btn-primary",
+            )
+        )
+        return actions
 
 
 class NewResource(Model):
