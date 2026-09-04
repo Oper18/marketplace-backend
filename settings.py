@@ -37,7 +37,7 @@ REFRESH_TOKEN_LIFETIME = 24*60*60*60
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASEDIR, "static")
 os.makedirs(os.path.join(BASEDIR, "static"), exist_ok=True)
-STATIC_PATH = "/static"
+STATIC_PATH = "/api/static"
 
 IMG_DIR = os.path.join(STATIC_DIR, "img")
 IMG_PATH = os.path.join(STATIC_PATH, "img")

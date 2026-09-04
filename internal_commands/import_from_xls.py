@@ -41,6 +41,7 @@ async def import_products(dir_path, file_name):
                 try:
                     ext = ""
                     img_filename = None
+                    img_name = None
                     for f in os.listdir(os.path.join(dir_path, img_dir)):
                         if r[6].value.lower() + '.jpg' == f.lower():
                             ext = "." + f.split(".")[-1].lower()
@@ -56,11 +57,11 @@ async def import_products(dir_path, file_name):
                             await f.write(img)
                 except BaseException as e:
                     print("EXCEPTION: ", e)
-                    filename = None
+                    img_name = None
                 product_data = {
                     "name": r[0].value,
                     "full_name": r[1].value,
-                    "img": filename,
+                    "img": img_name,
                     "description": r[4].value if r[4].value else "",
                     "sketches": r[5].value if r[5].value else "",
                     "article_number": r[2].value,

@@ -33,6 +33,7 @@ from v1.shop import shop
 from v1.util import util
 
 from admin_import_routes import router as admin_import_router
+from static_routes import router as static_router
 
 from models.resources import ProductResource, ProductSerialNumberResource, \
     NewResource, CategoryResource, ManufacturerResource, BidResource
@@ -136,6 +137,7 @@ def create_app():
 
     _app.include_router(shop.router)
     _app.include_router(util.router)
+    _app.include_router(static_router)
 
     # _app.add_middleware(
     #     CORSMiddleware,

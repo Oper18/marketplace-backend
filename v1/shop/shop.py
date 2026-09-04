@@ -102,7 +102,7 @@ async def get_categories_handler(
     }
     for c in categories:
         cd = await c.as_dict(lang=lang)
-        cd["img"] = os.path.join(IMG_PATH, os.path.basename(cd["img"])) if cd.get("img") else None
+        cd["img"] = os.path.join(IMG_PATH, cd["img"]) if cd.get("img") else None
         cd["manufacturers"] = {}
         for p in await c.products.all():
             if p.manufacturer:
@@ -159,7 +159,7 @@ async def get_products(
     }
     for p in products:
         pd = await p.as_dict(lang=lang)
-        pd["img"] = os.path.join(IMG_PATH, os.path.basename(pd["img"])) if pd.get("img") else None
+        pd["img"] = os.path.join(IMG_PATH, pd["img"]) if pd.get("img") else None
         if p.category:
             product_category = await p.category.first()
             pd["category"] = await product_category.as_dict(lang=lang)
@@ -216,11 +216,11 @@ async def get_news(
     }
     for n in news:
         nd = await n.as_dict(lang=lang)
-        nd["banner"] = os.path.join(IMG_PATH, os.path.basename(nd["banner"])) \
+        nd["banner"] = os.path.join(IMG_PATH, nd["banner"]) \
             if nd.get("banner") else None
         if n.product:
             nd["product"] = await n.product.as_dict(lang=lang)
-            nd["product"]["img"] = os.path.join(IMG_PATH, os.path.basename(nd["product"]["img"])) \
+            nd["product"]["img"] = os.path.join(IMG_PATH, nd["product"]["img"]) \
                 if nd["product"].get("img") else None
         res["news"].append(nd)
 
@@ -255,7 +255,7 @@ async def check_article_number(
         res = await ser_num.product
         if res:
             res = await res.as_dict(lang=lang)
-            res["img"] = os.path.join(IMG_PATH, os.path.basename(res["img"])) if res.get("img") else None
+            res["img"] = os.path.join(IMG_PATH, res["img"]) if res.get("img") else None
             return ProductResponse.parse_obj(res)
         else:
             return Error40xResponse(reason="You have purchased a genuine infinity meds product.\nWe are waiting for you again on our website.")
